@@ -58,7 +58,12 @@ class Price extends AbstractModifier
         }
         $productId = $this->locator->getProduct()->getId();
         $productPrice =  $this->locator->getProduct()->getPrice();
-        $data[$productId][self::DATA_SOURCE_DEFAULT]['price'] = $this->formatPrice($productPrice);
+        $data[$productId][self::DATA_SOURCE_DEFAULT]['price'] = $this->formatPrice($productPrice);       
+        if(isset($data[$productId][self::DATA_SOURCE_DEFAULT]['tier_price'])){
+             foreach($data[$productId][self::DATA_SOURCE_DEFAULT]['tier_price'] as $key => $tierPrice){
+                $data[$productId][self::DATA_SOURCE_DEFAULT]['tier_price'][$key]['price'] = $this->formatPrice($tierPrice['website_price']);
+             }
+        }        
         return $data;
     }
 
